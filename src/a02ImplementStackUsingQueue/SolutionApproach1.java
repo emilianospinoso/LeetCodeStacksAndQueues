@@ -3,14 +3,14 @@ package a02ImplementStackUsingQueue;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Solution {
+public class SolutionApproach1 {
 
     static Queue<Integer> q1 = new LinkedList<>();
     static Queue<Integer> q2 = new LinkedList<>();
     static int top;
 
     public static void main(String[] args) {
-        Solution solution = new Solution(); // Crear una instancia de la clase Solution
+        SolutionApproach1 solution = new SolutionApproach1(); // Crear una instancia de la clase Solution
         solution.push(3);
         solution.push(4);
         solution.push(5);
