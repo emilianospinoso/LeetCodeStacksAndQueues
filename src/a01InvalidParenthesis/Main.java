@@ -14,7 +14,7 @@ Every close bracket has a corresponding open bracket of the same type.
 public class Main {
     public static void main(String[] args) {
         // Hash table that takes care of the mappings.
-        System.out.println(isValid("()[[]"));
+        System.out.println(isValid("()[[]{}"));
     }
 
     public static boolean isValid(String s) {
