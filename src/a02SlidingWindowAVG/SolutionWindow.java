@@ -34,6 +34,7 @@ public class SolutionWindow {
         for (int num:q1) {
             sum+=num;
             sum=sum/window;
+
         }
         System.out.println(sum);
         return sum;
