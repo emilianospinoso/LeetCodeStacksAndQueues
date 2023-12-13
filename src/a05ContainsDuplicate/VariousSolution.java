@@ -30,7 +30,7 @@ public class VariousSolution {
     private static boolean secondApproachSorting(int[] nums) {
         Arrays.sort(nums);
         for (int i = 0; i < nums.length - 1; i++) {
-            if (i == i + 1) {
+            if (nums[i] == nums[i + 1]) {
                 return true;
             }
         }
