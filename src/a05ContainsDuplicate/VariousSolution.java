@@ -11,7 +11,7 @@ public class VariousSolution {
         int[] nums = {1, 4, 5, 1};
 
         //first approach:Linear Search (Brute force)
-        //System.out.println(firstApproachLinear(nums));
+        System.out.println(firstApproachLinear(nums));
         System.out.println(secondApproachSorting(nums));
 
     }
