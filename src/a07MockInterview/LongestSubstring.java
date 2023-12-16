@@ -8,7 +8,6 @@ public class LongestSubstring {
        // System.out.println(lengthOfLongestSubstring("bbbbb"));    // Output: 1
         System.out.println(lengthOfLongestSubstring("pwwkew"));    // Output: 3
     }
-
     static int lengthOfLongestSubstring(String s) {
         int n = s.length();
         int maxLength = 0;
@@ -28,7 +27,6 @@ public class LongestSubstring {
             // Store the index of the current character
             charIndexMap.put(currentChar, end);
         }
-
         return maxLength;
     }
 }
