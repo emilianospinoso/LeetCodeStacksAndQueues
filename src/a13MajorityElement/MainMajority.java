@@ -14,7 +14,7 @@ public class MainMajority {
     static int majorityElement(int[] nums) {
         int num = 0;
         int tamFind= nums.length/2;
-        Map<Integer, Integer> appearances = new HashMap<>();
+        HashMap<Integer, Integer> appearances = new HashMap<>();
         for (Integer numb: nums){
             appearances.put(numb, appearances.getOrDefault(numb,0)+1);
             if(appearances.get(numb)>tamFind){
