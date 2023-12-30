@@ -4,8 +4,8 @@ public class SubMatrixCoung {
 
     public static void main(String[] args) {
         int[][] mat = {{1, 0, 1},
-                {1, 1, 0},
-                {1, 1, 0}};
+                       {1, 1, 0},
+                       {1, 1, 0}};
         System.out.println(numSubmat(mat));
     }
 
@@ -24,7 +24,13 @@ public class SubMatrixCoung {
             for (int j = 0; j < n; j++) {
                 if (mat[i][j] == 1) {
                     // Cada celda representa la longitud del rectángulo más grande hasta esa celda
-                    dp[i][j] = (j == 0) ? 1 : dp[i][j - 1] + 1;
+                    // Verificar si estamos en la primera columna
+                    if (j == 0) {
+                        dp[i][j] = 1;
+                    } else {
+                        // La celda actual es '1', actualizamos la longitud del rectángulo más grande hasta esta celda
+                        dp[i][j] = dp[i][j - 1] + 1;
+                    }
                     int longitudActual = dp[i][j];
 
                     // Paso 2: Contar submatrices rectangulares con el lado derecho en la celda actual
@@ -34,6 +40,15 @@ public class SubMatrixCoung {
                     }
                 }
             }
+        }
+
+        // Imprimir la matriz dp
+        System.out.println("Matriz dp:");
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                System.out.print(dp[i][j] + " ");
+            }
+            System.out.println();
         }
 
         // Paso 3: Devolver el conteo total de submatrices con unos
