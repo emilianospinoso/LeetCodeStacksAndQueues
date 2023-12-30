@@ -3,8 +3,7 @@ package a33DayOfWeek;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import static org.junit.Assert.assertEquals;
-import org.junit.Test;
+
 
 public class DayEnumSolution {
 
