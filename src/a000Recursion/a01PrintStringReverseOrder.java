@@ -24,8 +24,10 @@ public class a01PrintStringReverseOrder {
 
         // Intercambiamos los caracteres en las posiciones left y right
         char tmp = s[left];
-        s[left++] = s[right];
-        s[right--] = tmp;
+        s[left] = s[right];
+        s[right] = tmp;
+        left++;
+        right--;
 
         // Llamada recursiva con los nuevos valores de left y right
         helper(s, left, right);
