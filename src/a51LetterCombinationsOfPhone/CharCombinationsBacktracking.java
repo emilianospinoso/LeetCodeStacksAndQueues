@@ -3,44 +3,54 @@ package a51LetterCombinationsOfPhone;
 import java.util.*;
 
 public class CharCombinationsBacktracking {
+    // Lista para almacenar las combinaciones
+    private static List<String> combinations = new ArrayList<>();
+    // Mapa que asocia cada dígito con las letras correspondientes
+    private static Map<Character, String> letters = Map.of(
+            '2', "abc", '3', "def", '4', "ghi", '5', "jkl",
+            '6', "mno", '7', "pqrs", '8', "tuv", '9', "wxyz");
+    // Cadena de dígitos de entrada
+    private static String phoneDigits;
+
     public static void main(String[] args) {
-        List<String> result = letterCombinations("2345");
+        // Llama a la función principal y muestra el resultado
+        List<String> result = letterCombinations("23");
         System.out.println(result);
     }
 
+    // Función principal que inicia el proceso de backtracking
     public static List<String> letterCombinations(String digits) {
-        List<String> combinations = new ArrayList<>();
+        // Reinicia la lista de combinaciones antes de cada llamada
+        combinations.clear();
 
-        if (digits == null || digits.length() == 0) {
+        // Si la entrada está vacía, devuelve la lista de combinaciones actual
+        if (digits.length() == 0) {
             return combinations;
         }
 
-        // Mapeo de dígitos a letras correspondientes
-        String[] digitMapping = {
-                "0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
-        };
-
-        // Inicializar la lista de combinaciones con la primera letra correspondiente al primer dígito
-        for (char letter : digitMapping[Character.getNumericValue(digits.charAt(0))].toCharArray()) {
-            combinations.add(String.valueOf(letter));
-        }
-
-        // Iterar sobre los dígitos restantes
-        for (int i = 1; i < digits.length(); i++) {
-            String currentLetters = digitMapping[Character.getNumericValue(digits.charAt(i))];
-            List<String> newCombinations = new ArrayList<>();
-
-            // Combinar cada letra del dígito actual con todas las combinaciones existentes
-            for (String combination : combinations) {
-                for (char letter : currentLetters.toCharArray()) {
-                    newCombinations.add(combination + letter);
-                }
-            }
-
-            // Actualizar la lista de combinaciones
-            combinations = newCombinations;
-        }
-
+        // Inicia el backtracking con un camino vacío y un índice de inicio de 0
+        phoneDigits = digits;
+        backtrack(0, new StringBuilder());
         return combinations;
+    }
+
+    // Función de backtracking recursiva
+    private static void backtrack(int index, StringBuilder path) {
+        // Si el camino tiene la misma longitud que los dígitos, se tiene una combinación completa
+        if (path.length() == phoneDigits.length()) {
+            combinations.add(path.toString());
+            return; // Backtrack
+        }
+
+        // Obtiene las letras asociadas al dígito actual y recorre ellas
+        String possibleLetters = letters.get(phoneDigits.charAt(index));
+        for (char letter : possibleLetters.toCharArray()) {
+            // Agrega la letra al camino actual
+            path.append(letter);
+            // Mueve al siguiente dígito
+            backtrack(index + 1, path);
+            // Backtrack eliminando la letra antes de pasar al siguiente
+            path.deleteCharAt(path.length() - 1);
+        }
     }
 }
