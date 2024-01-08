@@ -9,35 +9,70 @@ public class APathMinimumEffortClimber {
 
     }
 
-    static void findMinPath(int[][] matrix, int x, int y, int r, int c) {
-        // Base cases to check if the current cell is out of bounds or not part of the island
-        if (x < 0 || x >= r || y < 0 || y >= c) {
-            return;
+    static int minimumEffortPath(int[][] heights) {
+        // Obtener el número de filas y columnas de la matriz
+        int rows = heights.length;
+        int cols = heights[0].length;
+
+        // Definir las direcciones posibles: derecha, abajo, izquierda, arriba
+        int[][] directions = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+
+        // Inicializar los extremos para la búsqueda binaria
+        int left = 0;
+        int right = Integer.MAX_VALUE;
+
+        // Búsqueda binaria para encontrar el esfuerzo mínimo
+        while (left < right) {
+            // Calcular el punto medio
+            int mid = left + (right - left) / 2;
+
+            // Crear una matriz de visitados para cada iteración
+            boolean[][] visited = new boolean[rows][cols];
+
+            // Llamar a la función DFS para verificar si es posible llegar al destino
+            if (dfs(heights, 0, 0, rows, cols, directions, visited, mid)) {
+                // Si es posible, ajustar la búsqueda hacia la izquierda
+                right = mid;
+            } else {
+                // Si no es posible, ajustar la búsqueda hacia la derecha
+                left = mid + 1;
+            }
         }
-        findMinPath(matrix, x + 1, y, r, c); // down
-        findMinPath(matrix, x, y + 1, r, c); // right
-        findMinPath(matrix, x - 1, y, r, c); // top
-        findMinPath(matrix, x, y - 1, r, c); // left
+
+        // Devolver el esfuerzo mínimo encontrado
+        return left;
     }
 
-
-    static int minimumEffortPath(int[][] heights) {
-        int minimumPath = 0;
-
-        int rows = 0;
-        int cols = heights[0].length;
-        if (rows == 0) {
-            return 0;
+    // Función DFS para explorar rutas posibles y verificar si es posible llegar al destino con un esfuerzo dado
+    static boolean dfs(int[][] heights, int x, int y, int rows, int cols, int[][] directions, boolean[][] visited, int effort) {
+        // Caso base: llegar al destino
+        if (x == rows - 1 && y == cols - 1) {
+            return true;
         }
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (heights[i][j] > heights[i][j]) {
-                    minimumPath++;
-                    findMinPath(heights, i, j, rows, cols);
+
+        // Marcar la celda actual como visitada
+        visited[x][y] = true;
+
+        // Iterar sobre las direcciones posibles
+        for (int[] direction : directions) {
+            int newX = x + direction[0];
+            int newY = y + direction[1];
+
+            // Verificar límites y si la celda no ha sido visitada
+            if (newX >= 0 && newX < rows && newY >= 0 && newY < cols && !visited[newX][newY]) {
+                // Calcular el esfuerzo actual
+                int currentEffort = Math.abs(heights[newX][newY] - heights[x][y]);
+
+                // Verificar si el esfuerzo actual es menor o igual al esfuerzo permitido
+                if (currentEffort <= effort) {
+                    // Llamada recursiva para continuar la exploración
+                    if (dfs(heights, newX, newY, rows, cols, directions, visited, effort)) {
+                        return true; // Si es posible llegar al destino, retornar verdadero
+                    }
                 }
             }
         }
 
-        return minimumPath;
+        return false; // Si no es posible llegar al destino, retornar falso
     }
 }
